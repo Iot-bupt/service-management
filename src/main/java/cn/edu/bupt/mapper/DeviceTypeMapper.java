@@ -10,7 +10,10 @@ import java.util.List;
  * Created by Administrator on 2018/4/11.
  */
 @Mapper
+
 public interface DeviceTypeMapper {
+    @Select("select  device_type_id  as deviceTypeId,manufacturer_id as  manufacturerId,device_type_name as deviceTypeName  from device_type where manufacturer_id = #{id} and device_type_name=#{name}")
+     DeviceType findByMidAndName(@Param("id")int id, @Param("name")String name);
 
     @Insert("insert into device_type (manufacturer_id,device_type_name) values (#{manufacturerId},#{deviceTypeName}) ")
     @Options(useGeneratedKeys = true, keyProperty = "deviceTypeId")

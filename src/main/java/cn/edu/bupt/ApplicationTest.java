@@ -35,9 +35,10 @@ public class ApplicationTest {
 
     @Test
     public void test(){
-        List ls = new ArrayList<>();
-        ls.add(ls);
-        ls.toString();
+//        List ls = new ArrayList<>();
+//        ls.add(ls);
+//        ls.toString();
+        System.err.println(123);
 //        Manufacturer m =  new Manufacturer();
 //        System.out.println("before "+m.getManufacturerId());;
 //        m.setManufacturerName("test3");

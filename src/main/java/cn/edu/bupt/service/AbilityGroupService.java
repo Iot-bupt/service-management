@@ -1,13 +1,18 @@
 package cn.edu.bupt.service;
 
 import cn.edu.bupt.common.model.AbilityGroup;
+import cn.edu.bupt.common.model.DeviceType;
+import cn.edu.bupt.common.model.Manufacturer;
+import cn.edu.bupt.common.model.Model;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2018/4/12.
  */
 public interface AbilityGroupService {
-    public void addAbilityGroupService(AbilityGroup serviceGroup);
-    public void getManufacturersByKeyWords(String keyWords);
-    public void getDeviceTypesByKeyWords(String keyWords);
-    public void getModelsByKeyWords(String keyWords);
+    public void addAbilityGroup(AbilityGroup abilityGroup);
+    public List<Manufacturer> getManufacturersByKeyWords(String keyWords);
+    public List<DeviceType> getDeviceTypesByKeyWords(int mid, String keyWords);
+    public List<Model> getModelsByKeyWords(int mid, int did, String keyWords);
 }

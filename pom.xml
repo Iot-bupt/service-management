@@ -39,6 +39,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <version>${spring-boot.version}</version>
         </dependency>
@@ -97,7 +102,7 @@
     </dependencies>
 
     <build>
-        <finalName>device-management</finalName>
+        <finalName>service-management</finalName>
         <plugins>  <!-- 使用的插件列表 。 -->
             <plugin>  <!--maven编译插件-->
                 <groupId>org.apache.maven.plugins</groupId>

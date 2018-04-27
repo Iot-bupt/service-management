@@ -11,6 +11,9 @@ import java.util.List;
 @Mapper
 public interface ManufacturerMapper {
 
+    @Select("select  manufacturer_id as manufacturerId, manufacturer_name as  manufacturerName  from manufacturer where manufacturer_name = #{name}")
+    Manufacturer findManufactureByName(@Param("name") String name);
+
     @Insert("insert into manufacturer (manufacturer_name) values (#{manufacturerName}) ")
     @Options(useGeneratedKeys = true, keyProperty = "manufacturerId")
     int insert(Manufacturer manufacturer);

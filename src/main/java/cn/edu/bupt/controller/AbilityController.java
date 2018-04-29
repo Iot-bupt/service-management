@@ -26,7 +26,7 @@ public class AbilityController extends BaseController{
     JsonParser parser = new JsonParser();
     @RequestMapping(value = "/ability",method = RequestMethod.POST)
    public Ability saveAbility(@RequestBody String data,HttpServletResponse response){
-        log.trace("AbilityController.saveAbility receive a request [{}]" ,data );
+        log.info("AbilityController.saveAbility receive a request [{}]" ,data );
         JsonObject obj = parser.parse(data).getAsJsonObject();
         int abilityId = obj.has("abilityId")? obj.getAsJsonPrimitive("abilityId").getAsInt():-1;
         int modelId = obj.has("modelId")? obj.getAsJsonPrimitive("modelId").getAsInt():-1;
@@ -48,13 +48,13 @@ public class AbilityController extends BaseController{
 
     @RequestMapping(value = "/ability/{abilityId}",method = RequestMethod.DELETE)
     public void deleteAbility(@PathVariable int abilityId,HttpServletResponse response){
-        log.trace("AbilityController.deleteAbility receive a request [{}]" ,abilityId );
+        log.info("AbilityController.deleteAbility receive a request [{}]" ,abilityId );
         abilityService.deleteAbilityFromAbilityGroup(abilityId);
     }
 
     @RequestMapping(value = "/ability/{modelId}",method = RequestMethod.GET)
     public List<Ability> findAbilitiesByModelId(@PathVariable int modelId,HttpServletResponse response){
-        log.trace("AbilityController.findAbilitiesByModelId receive a request [{}]" ,modelId );
+        log.info("AbilityController.findAbilitiesByModelId receive a request [{}]" ,modelId );
        return abilityService.findAbilitiesByModelId(modelId);
     }
 

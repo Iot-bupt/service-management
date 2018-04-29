@@ -26,7 +26,7 @@ public class AbilityGroupController extends BaseController{
 
     @RequestMapping(value = "/abilityGroup", method = RequestMethod.POST)
     public AbilityGroup  saveAbilityGroup(@RequestBody String group,HttpServletResponse response){
-        log.trace("AbilityGroup.saveAbilityGroup receive request [{}]",group);
+        log.info("AbilityGroup.saveAbilityGroup receive request [{}]",group);
         JsonObject obj = parser.parse(group).getAsJsonObject();
         String manufacturerName = obj.has("manufacturerName")?obj.get("manufacturerName").getAsString():null;
         String deviceType = obj.has("deviceType")?obj.get("deviceType").getAsString():null;
@@ -42,21 +42,21 @@ public class AbilityGroupController extends BaseController{
     @RequestMapping(value = "/abilityGroup/manufacturers", method = RequestMethod.GET)
     public List<Manufacturer> getManufacturers(@RequestParam(required = false) String keyword,
                                                HttpServletResponse response){
-        log.trace("AbilityGroup.getManufacturers receive request [{}]",keyword);
+        log.info("AbilityGroup.getManufacturers receive request [{}]",keyword);
         return abilityGroupService.getManufacturersByKeyWords(keyword);
     }
 
     @RequestMapping(value = "/abilityGroup/deviceTypes", method = RequestMethod.GET)
     public List<DeviceType> getDeviceTypes(@RequestParam int manufacturerId, @RequestParam(required = false) String keyword,
                                            HttpServletResponse response){
-        log.trace("AbilityGroup.getDeviceTypes receive request [{}] [{}]",manufacturerId,keyword);
+        log.info("AbilityGroup.getDeviceTypes receive request [{}] [{}]",manufacturerId,keyword);
         return abilityGroupService.getDeviceTypesByKeyWords(manufacturerId,keyword);
     }
 
     @RequestMapping(value = "/abilityGroup/models", method = RequestMethod.GET)
     public List<Model> getModels(@RequestParam int manufacturerId, @RequestParam int deviceTypeId, @RequestParam(required = false)  String keyword,
                                  HttpServletResponse response){
-        log.trace("AbilityGroup.getModels receive request [{}] [{}] [{}]",manufacturerId,deviceTypeId,keyword);
+        log.info("AbilityGroup.getModels receive request [{}] [{}] [{}]",manufacturerId,deviceTypeId,keyword);
         return abilityGroupService.getModelsByKeyWords(manufacturerId,deviceTypeId,keyword);
     }
 }

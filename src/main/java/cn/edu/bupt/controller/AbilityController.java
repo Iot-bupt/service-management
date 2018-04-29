@@ -1,6 +1,7 @@
 package cn.edu.bupt.controller;
 
 import cn.edu.bupt.common.model.Ability;
+import cn.edu.bupt.common.util.AbilityValidator;
 import cn.edu.bupt.service.AbilityService;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -28,6 +29,7 @@ public class AbilityController extends BaseController{
         int modelId = obj.has("modelId")? obj.getAsJsonPrimitive("modelId").getAsInt():-1;
         String abilityDes = obj.has("abilityDes")?obj.get("abilityDes").getAsString():null;
         if(modelId==-1||abilityDes==null) return null;
+        if(!AbilityValidator.isValidateAbility(abilityDes))return null;
         Ability ability = new Ability();
         ability.setModelId(modelId);
         ability.setAbilityDes(abilityDes);

@@ -58,4 +58,11 @@ public class AbilityController extends BaseController{
        return abilityService.findAbilitiesByModelId(modelId);
     }
 
+    @RequestMapping(value = "/ability/{manufacturerName}/{deviceTypeName}/{modelName}",method = RequestMethod.GET)
+    public List<Ability> findAbilitiesByThreeTouple(@PathVariable String manufacturerName,@PathVariable String deviceTypeName,
+                                                    @PathVariable String modelName, HttpServletResponse response){
+        log.info("AbilityController.findAbilitiesByModelId receive a request [{},{},{}]" ,manufacturerName,deviceTypeName ,modelName);
+        return abilityService.findAbilitiesByThreeCouple(manufacturerName,deviceTypeName,modelName);
+    }
+
 }

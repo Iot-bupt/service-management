@@ -39,6 +39,18 @@ public class AbilityGroupController extends BaseController{
         return abilityGroup;
     }
 
+    @RequestMapping(value = "/abilityGroup", method = RequestMethod.GET)
+    public List<AbilityGroup> getAllAbilityGroups(){
+        log.info("AbilityGroup.getAllAbilityGroups receive request [{}]");
+        return abilityGroupService.getAllAbilityGroup();
+    }
+
+    @RequestMapping(value = "/abilityGroup", method = RequestMethod.DELETE)
+    public void deleteAbilityGroup(@RequestParam int modelId){
+        log.info("AbilityGroup.deleteAbilityGroup receive request [{}]",modelId);
+        abilityGroupService.deleteAbilityGroup(modelId);
+    }
+
     @RequestMapping(value = "/abilityGroup/manufacturers", method = RequestMethod.GET)
     public List<Manufacturer> getManufacturers(@RequestParam(required = false) String keyword,
                                                HttpServletResponse response){

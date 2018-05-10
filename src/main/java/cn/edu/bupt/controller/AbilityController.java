@@ -30,7 +30,7 @@ public class AbilityController extends BaseController{
         JsonObject obj = parser.parse(data).getAsJsonObject();
         int abilityId = obj.has("abilityId")? obj.getAsJsonPrimitive("abilityId").getAsInt():-1;
         int modelId = obj.has("modelId")? obj.getAsJsonPrimitive("modelId").getAsInt():-1;
-        String abilityDes = obj.has("abilityDes")?obj.get("abilityDes").getAsString():null;
+        String abilityDes = obj.has("abilityDes")?obj.get("abilityDes").toString():null;
         if(modelId==-1||abilityDes==null) return null;
         if(!AbilityValidator.isValidateAbility(abilityDes))return null;
         Ability ability = new Ability();

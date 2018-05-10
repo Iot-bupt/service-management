@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface AbilityGroupService {
     public void addAbilityGroup(AbilityGroup abilityGroup);
+    public void deleteAbilityGroup(int modelId);
+    public List<AbilityGroup> getAllAbilityGroup();
     public List<Manufacturer> getManufacturersByKeyWords(String keyWords);
     public List<DeviceType> getDeviceTypesByKeyWords(int mid, String keyWords);
     public List<Model> getModelsByKeyWords(int mid, int did, String keyWords);

@@ -3,6 +3,7 @@ package cn.edu.bupt.common.util;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 
 /**
  * Created by Administrator on 2018/4/27.
@@ -16,7 +17,7 @@ public class AbilityValidator {
             if(!serviceJson.has("serviceDescription")||!serviceJson.getAsJsonPrimitive("serviceDescription").isString()) return false;
             if(!serviceJson.has("serviceType")||!serviceJson.getAsJsonPrimitive("serviceType").isString()) return false;
 
-            if(serviceJson.get("serviceType").equals("thirdParty")){
+            if(serviceJson.get("serviceType").equals("thirdparty")){
                 if(!serviceJson.has("protocol")||!serviceJson.getAsJsonPrimitive("protocol").isString()) return false;
                 if(!serviceJson.has("url")||!serviceJson.getAsJsonPrimitive("url").isString()) return false;
             }
@@ -30,9 +31,9 @@ public class AbilityValidator {
 
                 for(JsonElement ele:serviceBody.getAsJsonArray("params")){
                     if(!ele.isJsonObject()) return false;
-                    if(ele.getAsJsonObject().has("key")||!ele.getAsJsonObject().getAsJsonPrimitive("key").isString()) return false;
-                    if(ele.getAsJsonObject().has("type")||!ele.getAsJsonObject().getAsJsonPrimitive("type").isNumber()) return false;
-                    if(ele.getAsJsonObject().has("value")||!ele.getAsJsonObject().getAsJsonPrimitive("value").isString()) return false;
+                    if(!ele.getAsJsonObject().has("key")||!ele.getAsJsonObject().getAsJsonPrimitive("key").isString()) return false;
+                    if(!ele.getAsJsonObject().has("type")||!ele.getAsJsonObject().getAsJsonPrimitive("type").isNumber()) return false;
+                    if(!ele.getAsJsonObject().has("value")||!ele.getAsJsonObject().getAsJsonPrimitive("value").isString()) return false;
                 }
             }
             return true;

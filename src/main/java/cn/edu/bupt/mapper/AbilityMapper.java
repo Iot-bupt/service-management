@@ -23,4 +23,7 @@ public interface AbilityMapper {
 
     @Select("select  ability_id  as abilityId,model_id as  modelId,ability_des as abilityDes  from ability where model_id = #{id}")
     List<Ability> findAllAbilityByModelId(int id);
+
+    @Delete("delete from ability where model_id = #{modelId}")
+    void delete(int modelId);
 }

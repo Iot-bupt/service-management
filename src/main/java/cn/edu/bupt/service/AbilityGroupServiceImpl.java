@@ -4,6 +4,7 @@ import cn.edu.bupt.common.model.AbilityGroup;
 import cn.edu.bupt.common.model.DeviceType;
 import cn.edu.bupt.common.model.Manufacturer;
 import cn.edu.bupt.common.model.Model;
+import cn.edu.bupt.mapper.AbilityMapper;
 import cn.edu.bupt.mapper.DeviceTypeMapper;
 import cn.edu.bupt.mapper.ManufacturerMapper;
 import cn.edu.bupt.mapper.ModelMapper;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -26,6 +28,9 @@ public class AbilityGroupServiceImpl implements  AbilityGroupService{
 
     @Autowired
     ModelMapper modelMapper;
+
+    @Autowired
+    AbilityMapper abilityMapper;
 
     @Override
     @Transactional
@@ -56,6 +61,28 @@ public class AbilityGroupServiceImpl implements  AbilityGroupService{
         }else{
             model = mo;
         }
+    }
+
+    @Override
+    public List<AbilityGroup> getAllAbilityGroup() {
+        List<Model> ls = modelMapper.find();
+        List<AbilityGroup> res = new LinkedList<>();
+        ls.forEach(model -> {
+           int mid =  model.getManufacturerId();
+           int did = model.getDeviceTypeId();
+            AbilityGroup ag = new AbilityGroup();
+            ag.setManufacturer(manufacturerMapper.findManufacturerById(mid));
+            ag.setDeviceType(deviceTypeMapper.findByDeviceTypeId(did));
+            ag.setModel(model);
+            res.add(ag);
+        });
+        return res;
+    }
+
+    @Override
+    public void deleteAbilityGroup(int modelId) {
+        modelMapper.delete(modelId);
+        abilityMapper.delete(modelId);
     }
 
     @Override

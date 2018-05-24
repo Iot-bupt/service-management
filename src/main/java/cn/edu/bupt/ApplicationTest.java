@@ -1,9 +1,13 @@
 package cn.edu.bupt;
 
+import cn.edu.bupt.common.model.Ability;
 import cn.edu.bupt.mapper.DeviceTypeMapper;
 import cn.edu.bupt.mapper.ManufacturerMapper;
 import cn.edu.bupt.mapper.ModelMapper;
 import cn.edu.bupt.mapper.AbilityMapper;
+import cn.edu.bupt.util.ElasticUtil;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +42,21 @@ public class ApplicationTest {
 //        List ls = new ArrayList<>();
 //        ls.add(ls);
 //        ls.toString();
-        System.err.println(123);
+           List<Ability> as =  mapper3.findAllAbilityByModelId(1);
+
+        as.forEach(a->{
+            JsonObject data = new JsonObject();
+            data.addProperty("abilityId",a.getAbilityId());
+            JsonObject servcieDes = new JsonParser().parse(a.getAbilityDes()).getAsJsonObject();
+            data.add("serviceName",servcieDes.get("serviceName"));
+            data.add("serviceDescription",servcieDes.get("serviceDescription"));
+            ElasticUtil.insertDoc(a.getAbilityId(),data.toString());
+//            ElasticUtil.deleteDoc(a.getAbilityId());
+        });
+//           as.forEach(a->{
+//               System.out.println(a);
+//           });
+//        System.err.println(123);
 //        Manufacturer m =  new Manufacturer();
 //        System.out.println("before "+m.getManufacturerId());;
 //        m.setManufacturerName("test3");

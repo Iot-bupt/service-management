@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Mapper
 public interface ModelMapper {
-    @Select("select  device_type_id  as deviceTypeId,manufacturer_id as  manufacturerId,model_name as modelName from model where manufacturer_id = #{id} and   device_type_id=#{deviceTypeId} and model_name =#{name}")
+    @Select("select  model_id as modelId,device_type_id  as deviceTypeId,manufacturer_id as  manufacturerId,model_name as modelName from model where manufacturer_id = #{id} and   device_type_id=#{deviceTypeId} and model_name =#{name}")
      Model findByMIdAndDIdAndName(@Param("id")int id, @Param("deviceTypeId")int deviceTypeId,@Param("name")String name);
 
     @Insert("insert into model (manufacturer_id,device_type_id,model_name) values (#{manufacturerId},#{deviceTypeId},#{modelName}) ")

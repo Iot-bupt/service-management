@@ -3,6 +3,7 @@ package cn.edu.bupt.controller;
 import cn.edu.bupt.common.model.Ability;
 import cn.edu.bupt.common.util.AbilityValidator;
 import cn.edu.bupt.service.AbilityService;
+import cn.edu.bupt.util.ElasticUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import jdk.nashorn.internal.parser.JSONParser;
@@ -43,6 +44,12 @@ public class AbilityController extends BaseController{
             ability.setAbilityId(abilityId);
             abilityService.updateAbility(ability);
         }
+        JsonObject ob = new JsonObject();
+        ob.addProperty("abilityId",ability.getAbilityId());
+        JsonObject servcieDes = new JsonParser().parse(ability.getAbilityDes()).getAsJsonObject();
+        ob.add("serviceName",servcieDes.get("serviceName"));
+        ob.add("serviceDescription",servcieDes.get("serviceDescription"));
+        ElasticUtil.insertDoc(ability.getAbilityId(),ob.toString());
         return ability;
     }
 
@@ -50,6 +57,7 @@ public class AbilityController extends BaseController{
     public void deleteAbility(@PathVariable int abilityId,HttpServletResponse response){
         log.info("AbilityController.deleteAbility receive a request [{}]" ,abilityId );
         abilityService.deleteAbilityFromAbilityGroup(abilityId);
+        ElasticUtil.deleteDoc(abilityId);
     }
 
     @RequestMapping(value = "/ability/{modelId}",method = RequestMethod.GET)

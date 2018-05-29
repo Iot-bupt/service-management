@@ -16,7 +16,19 @@ public class HttpUtil {
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
 
-    public static String sendGet(String url,String reqBody) throws Exception{
+    public static String sendGet(String url)throws Exception{
+        String res = "";
+        Request.Builder buider = new Request.Builder()
+                .url(url).get();
+        Request request =  buider.build();
+        Response response = client.newCall(request).execute();
+        if (response.isSuccessful()){
+            return response.body().string();
+        }else{
+            return null;
+        }
+    }
+    public static String sendGetForEs(String url,String reqBody) throws Exception{
         String res = "";
 //        Request.Builder reqBuild = new Request.Builder();
 //        HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();

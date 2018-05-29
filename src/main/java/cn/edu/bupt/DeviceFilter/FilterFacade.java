@@ -22,19 +22,16 @@ public class FilterFacade implements Filter{
     private int timeThrehold;
 
     List<Filter> filters;
+    SimilarityCaculateStrategy startegy;
     @PostConstruct
     private void init(){
         filters = new ArrayList<>();
         filters.add(new LocationFilter(locationThrehold));
         filters.add(new TimeFilter(forwardDays,timeThrehold));
+        startegy = new MultiplicationStrategy();
     }
     @Override
-    public boolean filter(DeviceFilterMetadata metadata) {
-        for(Filter f:filters){
-            if(!f.filter(metadata)){
-                return false;
-            }
-        }
-        return true;
+    public double filter(DeviceFilterMetadata metadata) {
+        return startegy.caculateSimilarity(filters,metadata);
     }
 }

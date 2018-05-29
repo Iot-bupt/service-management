@@ -65,4 +65,9 @@ public class AbilityServiceImpl implements AbilityService{
         if(mo==null)return null;
         return findAbilitiesByModelId(mo.getModelId());
     }
+
+    @Override
+    public Ability getAbilityByAbilityId(int abilityId) {
+        return  abilityMapper.getById(abilityId);
+    }
 }

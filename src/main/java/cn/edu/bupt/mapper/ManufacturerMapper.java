@@ -24,6 +24,9 @@ public interface ManufacturerMapper {
     @Select("select  manufacturer_id as manufacturerId, manufacturer_name as  manufacturerName  from manufacturer")
     List<Manufacturer> findAll();
 
+    @Select("select  manufacturer_id as manufacturerId, manufacturer_name as  manufacturerName  from manufacturer where manufacturer_id=#{id}")
+    Manufacturer findById(int id);
+
     @Select("select  manufacturer_id as manufacturerId, manufacturer_name as  manufacturerName  from manufacturer where manufacturer_name like CONCAT(CONCAT('%', #{name}), '%')")
     List<Manufacturer> findByKeyWord(String name);
 }

@@ -111,4 +111,15 @@ public class AbilityGroupServiceImpl implements  AbilityGroupService{
             return modelMapper.findAllByKeyWord(mId,dId,keyWords);
         }
     }
+    @Override
+    public AbilityGroup getAbilityGroupByModelId(int modelId){
+        Model m = modelMapper.findById(modelId);
+        DeviceType dt = deviceTypeMapper.findById(m.getDeviceTypeId());
+        Manufacturer man = manufacturerMapper.findById(m.getManufacturerId());
+        AbilityGroup ag = new AbilityGroup();
+        ag.setManufacturer(man);
+        ag.setModel(m);
+        ag.setDeviceType(dt);
+        return ag;
+    }
 }

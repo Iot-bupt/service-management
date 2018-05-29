@@ -14,3 +14,10 @@ filter:
     threhold: 5
   locationfilter:
     threhold: 0.5
+
+service:
+  threhold: 3
+
+deviceAccess:
+  host: 127.0.0.1
+  port: 8100

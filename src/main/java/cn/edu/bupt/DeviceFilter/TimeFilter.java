@@ -15,7 +15,7 @@ public class TimeFilter implements Filter{
         this.threshold = threshold;
     }
     @Override
-    public boolean filter(DeviceFilterMetadata metadata) {
-        return false;
+    public double filter(DeviceFilterMetadata metadata) {
+        return 1.0;
     }
 }

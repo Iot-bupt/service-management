@@ -11,6 +11,7 @@ public interface AbilityService {
     public void addAbilityToAbilityGroup(Ability ability);
     public void updateAbility(Ability ability);
     public void deleteAbilityFromAbilityGroup(int abilityId);
+    public Ability getAbilityByAbilityId(int abilityId);
     public List<Ability> findAbilitiesByModelId(int modelId);
     public List<Ability> findAbilitiesByThreeCouple(String mName,String dName,String model);
 }

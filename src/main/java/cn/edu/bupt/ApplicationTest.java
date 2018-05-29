@@ -16,11 +16,27 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * Created by Administrator on 2018/4/10.
  */
+
+class T{
+    public void test(){
+        System.out.print("haha");
+    }
+    public void test1(T t){
+        System.out.print("haha");
+    }
+
+    public static void test2(T t){
+        System.out.print("haha");
+    }
+}
+
 @RunWith(SpringRunner.class)
 @EnableTransactionManagement
 @SpringBootTest
@@ -42,17 +58,22 @@ public class ApplicationTest {
 //        List ls = new ArrayList<>();
 //        ls.add(ls);
 //        ls.toString();
-           List<Ability> as =  mapper3.findAllAbilityByModelId(1);
-
-        as.forEach(a->{
-            JsonObject data = new JsonObject();
-            data.addProperty("abilityId",a.getAbilityId());
-            JsonObject servcieDes = new JsonParser().parse(a.getAbilityDes()).getAsJsonObject();
-            data.add("serviceName",servcieDes.get("serviceName"));
-            data.add("serviceDescription",servcieDes.get("serviceDescription"));
-            ElasticUtil.insertDoc(a.getAbilityId(),data.toString());
+            List<T> ls = new ArrayList<>();
+            ls.add(new T());
+            ls.forEach(T::test2);
+//        Comparator.comparing();
+//        Arrays.asList()
+//           List<Ability> as =  mapper3.findAllAbilityByModelId(1);
+//
+//        as.forEach(a->{
+//            JsonObject data = new JsonObject();
+//            data.addProperty("abilityId",a.getAbilityId());
+//            JsonObject servcieDes = new JsonParser().parse(a.getAbilityDes()).getAsJsonObject();
+//            data.add("serviceName",servcieDes.get("serviceName"));
+//            data.add("serviceDescription",servcieDes.get("serviceDescription"));
+//            ElasticUtil.insertDoc(a.getAbilityId(),data.toString());
 //            ElasticUtil.deleteDoc(a.getAbilityId());
-        });
+        }
 //           as.forEach(a->{
 //               System.out.println(a);
 //           });
@@ -83,4 +104,4 @@ public class ApplicationTest {
 //        System.out.println(mapper2.findAllByKeyWord(1,1,"edl"));
      //  System.out.println(mapper1.findAllByKeyWord(1,"test1"));
     }
-}
+

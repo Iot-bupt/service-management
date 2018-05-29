@@ -11,15 +11,11 @@ public class LocationFilter implements Filter{
     }
 
     @Override
-    public boolean filter(DeviceFilterMetadata metadata) {
+    public double filter(DeviceFilterMetadata metadata) {
         String location1 = metadata.getDevice().getLocation();
         String location2 = metadata.getLocation();
         double similarity = caculateSimilarity(location1,location2);
-        if(similarity>=threshold){
-            return true;
-        }else{
-            return false;
-        }
+        return similarity;
     }
 
     private double caculateSimilarity(String location1, String location2) {

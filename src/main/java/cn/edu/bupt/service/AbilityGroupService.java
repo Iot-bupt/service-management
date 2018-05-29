@@ -17,4 +17,5 @@ public interface AbilityGroupService {
     public List<Manufacturer> getManufacturersByKeyWords(String keyWords);
     public List<DeviceType> getDeviceTypesByKeyWords(int mid, String keyWords);
     public List<Model> getModelsByKeyWords(int mid, int did, String keyWords);
+    public AbilityGroup getAbilityGroupByModelId(int modelId);
 }

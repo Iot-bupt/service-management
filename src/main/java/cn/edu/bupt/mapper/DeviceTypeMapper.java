@@ -25,6 +25,9 @@ public interface DeviceTypeMapper {
     @Select("select  device_type_id  as deviceTypeId,manufacturer_id as  manufacturerId,device_type_name as deviceTypeName  from device_type where manufacturer_id = #{id}")
     List<DeviceType> findAll(int id);
 
+    @Select("select  device_type_id  as deviceTypeId,manufacturer_id as  manufacturerId,device_type_name as deviceTypeName  from device_type where device_type_id= #{id}")
+    DeviceType findById(int id);
+
     @Select("select  device_type_id  as deviceTypeId,manufacturer_id as  manufacturerId,device_type_name as deviceTypeName  from device_type where manufacturer_id = #{id} and device_type_name like CONCAT(CONCAT('%', #{keyWord}), '%')")
     List<DeviceType> findAllByKeyWord(@Param("id")int id, @Param("keyWord")String keyWord);
 

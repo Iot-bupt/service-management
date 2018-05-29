@@ -69,7 +69,7 @@ public class ElasticUtil {
         query.add("query",bool);
         String url = ESUrl+"/"+index+"/_search";
         try{
-            return HttpUtil.sendGet(url,query.toString());
+            return HttpUtil.sendGetForEs(url,query.toString());
         }catch(Exception e){
             e.printStackTrace();
             return null;

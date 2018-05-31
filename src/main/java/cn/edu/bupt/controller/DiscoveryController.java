@@ -8,12 +8,14 @@ import cn.edu.bupt.common.model.AbilityGroup;
 import cn.edu.bupt.common.model.Device;
 import cn.edu.bupt.service.AbilityGroupService;
 import cn.edu.bupt.service.AbilityService;
+import cn.edu.bupt.util.BdNLPUtil;
 import cn.edu.bupt.util.ElasticUtil;
 import cn.edu.bupt.util.HttpUtil;
 import com.google.gson.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,34 +51,44 @@ public class DiscoveryController {
     Gson gson = new Gson();
 
     @RequestMapping(value = "/control/device",method = RequestMethod.POST)
-    public String  controlDevice(String sentence) throws Exception{
+    public String  controlDevice(@RequestBody String sentence) throws Exception{
         JsonObject obj = new JsonParser().parse(sentence).getAsJsonObject();
         String sentence1 = obj.get("sentence").getAsString();
-        List<String> keywors = getKeyWors(sentence1);
+        boolean keywordsMaching = obj.get("keywordsMaching").getAsBoolean();
+        List<String> keywors = getKeyWords(sentence1);
         String location = getLocaltion(sentence1);
-
+        if(keywordsMaching){
             StringBuffer sb = new StringBuffer();
             for(String e:keywors)
                 sb.append(e.toString()+" ");
             sb.deleteCharAt(sb.length()-1);
             String res = ElasticUtil.queryAbilityByNameAndDes(sb.toString());
-                List<DeviceFilterMetadata> ls = getDevicesByThreeTouple(res,location);
+            List<DeviceFilterMetadata> ls = getDevicesByThreeTouple(res,location);
             //TODO 解析res拿到所有返回的服务，根据服务查到对应的设备，为每一个设备生成一个DeviceFilterMetadata，然后进入filter链处理
-           final List<FilterRes> fIlterRess = new ArrayList<>();
+            final List<FilterRes> fIlterRess = new ArrayList<>();
             ls.forEach(dm->{
                 fIlterRess.add(new FilterRes(dm.getDevice(),dm.getAbility(),filter.filter(dm)));
             });
-        Collections.sort(fIlterRess);
-        //TODO 根据fIlterRess中的设备及其对应的服务来调用相应的服务。
-        return null;
+            Collections.sort(fIlterRess);
+            //TODO 根据fIlterRess中的设备及其对应的服务来调用相应的服务
+            return null;
+        }else{
+//            abilityService.
+            return null;
+        }
     }
 
-    private List<String> getKeyWors(String sentence1) {
-        return null;
+    private List<String> getKeyWords(String sentence1) throws Exception{
+        return BdNLPUtil.getKeyWords(sentence1);
     }
 
-    private String getLocaltion(String sentence1) {
-        return null;
+    private String getLocaltion(String sentence1) throws Exception{
+        List<String> ls = BdNLPUtil.getLocation(sentence1);
+        StringBuffer sb = new StringBuffer();
+        ls.forEach(str->{
+            sb.append(str);
+        });
+        return sb.toString();
     }
 
     List<DeviceFilterMetadata> getDevicesByThreeTouple(String threeTouples,String location) throws Exception{

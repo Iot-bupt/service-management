@@ -1,5 +1,7 @@
 package cn.edu.bupt.DeviceFilter;
 
+import cn.edu.bupt.util.BdNLPUtil;
+
 /**
  * Created by Administrator on 2018/5/24.
  */
@@ -19,6 +21,11 @@ public class LocationFilter implements Filter{
     }
 
     private double caculateSimilarity(String location1, String location2) {
-        return 0;
+        try{
+            return BdNLPUtil.getSimilarity(location1,location2,"BOW");
+        }catch(Exception e){
+            e.printStackTrace();
+            return 0.1;
+        }
     }
 }

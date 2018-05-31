@@ -16,6 +16,8 @@ public class TimeFilter implements Filter{
     }
     @Override
     public double filter(DeviceFilterMetadata metadata) {
+        //TODO 考虑往前推30天，在三十天中的当前时间点附近如果发生指定服务调用的天数为count1，在三十天中的当前时间点附近如果发生指定服务调用的次数和为count2
+        // TODO 评价指标考虑设置为 （count1/30）*（30/(count2+1)）
         return 1.0;
     }
 }

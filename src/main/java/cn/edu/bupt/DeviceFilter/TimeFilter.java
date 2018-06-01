@@ -3,6 +3,7 @@ package cn.edu.bupt.DeviceFilter;
 import cn.edu.bupt.common.model.Event;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class TimeFilter implements Filter{
         List<Event> ls = new ArrayList<>();
         //TODO 初始化ls
         int countOfdays = 0;
-
+        List<Double> scoreOfday = new LinkedList<>();
         int index = 0;
 
         for(int i=30;i>0;i++){
@@ -36,12 +37,43 @@ public class TimeFilter implements Filter{
                 Event ev = ls.get(index);
                 int happen = 0;
                 int totalHappen = 0;
-                while(ev.getTime()<startTime+30*60*1000){
-                    if(ev.getTime()>startTime-30*60*1000){
-
+                while(index<ls.size()&&ev.getTime()<startTime){
+                    ev = ls.get(index);
+                    if(ev.getTime()>startTime-60*60*1000){
+                        happen = 1;
+                        totalHappen ++;
                     }
+                    index ++;
                 }
+            countOfdays += happen;
+            happen = 1;
+            scoreOfday.add(sigmoid(totalHappen));
         }
-        return 1.0;
+
+        double score1 = (double)countOfdays/30;
+
+        double sum1 = 0;
+
+        for(double d:scoreOfday){
+            sum1 += d;
+        }
+        sum1 = sum1 / 30;
+
+        int count2 = 0;
+        for(;index<ls.size();index++){
+            Event e = ls.get(index);
+            if(e.getTime()>currentTime-60*60*1000){
+                count2++;
+            }
+        }
+        //TODO score2 主要考虑当前设备在过去的指定时间段附近的指定服务调用次数和当前时间段的指定服务调用次数的关系
+        //TODO 比如说 device1，在过去的30天中12点到1点的servicce1的调用次数为n1,今天的12点到1点的服务调用次数为n2
+        //TODO  则score2 = n2-n1（实际上对n2 和 n1 分别做了sigmoid处理以应对异常数据）
+        double score2 = sum1>sigmoid(count2)?sum1-sigmoid(count2):0.0000001;
+
+        return score1*score2;
+    }
+    private  double sigmoid(double x){
+       return 1/(1+ Math.pow(Math.E,-x));
     }
 }

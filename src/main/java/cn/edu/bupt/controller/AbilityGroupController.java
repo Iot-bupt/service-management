@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Administrator on 2018/4/26.
  */
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/servicemanagement")
 @Slf4j
 public class AbilityGroupController extends BaseController{
 

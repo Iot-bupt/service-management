@@ -21,7 +21,7 @@ public class AbilityValidator {
                 if(!serviceJson.has("protocol")||!serviceJson.getAsJsonPrimitive("protocol").isString()) return false;
                 if(!serviceJson.has("url")||!serviceJson.getAsJsonPrimitive("url").isString()) return false;
             }
-            if(!serviceJson.has("requireResponce")||!serviceJson.getAsJsonPrimitive("requireResponce").isBoolean()) return false;
+            if(!serviceJson.has("requireResponse")||!serviceJson.getAsJsonPrimitive("requireResponse").isBoolean()) return false;
             if(!serviceJson.has("serviceBody")||!serviceJson.get("serviceBody").isJsonObject()){
                 return false;
             }else{

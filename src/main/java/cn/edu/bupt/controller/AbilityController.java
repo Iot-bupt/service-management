@@ -8,6 +8,7 @@ import com.google.gson.JsonParser;
 import jdk.nashorn.internal.parser.JSONParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.spring.web.json.Json;
 
@@ -24,7 +25,9 @@ public class AbilityController extends BaseController{
     @Autowired
     AbilityService abilityService;
     JsonParser parser = new JsonParser();
-    @RequestMapping(value = "/ability",method = RequestMethod.POST)
+
+   @RequestMapping(value = "/ability",method = RequestMethod.POST)
+   @PreAuthorize("#oauth2.hasScope('all') OR hasAuthority('TENANT_ADMIN')")
    public Ability saveAbility(@RequestBody String data,HttpServletResponse response){
         log.info("AbilityController.saveAbility receive a request [{}]" ,data );
         JsonObject obj = parser.parse(data).getAsJsonObject();
@@ -47,18 +50,21 @@ public class AbilityController extends BaseController{
     }
 
     @RequestMapping(value = "/ability/{abilityId}",method = RequestMethod.DELETE)
+    @PreAuthorize("#oauth2.hasScope('all') OR hasAuthority('TENANT_ADMIN')")
     public void deleteAbility(@PathVariable int abilityId,HttpServletResponse response){
         log.info("AbilityController.deleteAbility receive a request [{}]" ,abilityId );
         abilityService.deleteAbilityFromAbilityGroup(abilityId);
     }
 
     @RequestMapping(value = "/ability/{modelId}",method = RequestMethod.GET)
+    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
     public List<Ability> findAbilitiesByModelId(@PathVariable int modelId,HttpServletResponse response){
         log.info("AbilityController.findAbilitiesByModelId receive a request [{}]" ,modelId );
        return abilityService.findAbilitiesByModelId(modelId);
     }
 
     @RequestMapping(value = "/ability/{manufacturerName}/{deviceTypeName}/{modelName:.+}",method = RequestMethod.GET)
+    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
     public List<Ability> findAbilitiesByThreeTouple(@PathVariable String manufacturerName,@PathVariable String deviceTypeName,
                                                     @PathVariable String modelName, HttpServletResponse response){
         log.info("AbilityController.findAbilitiesByModelId receive a request [{},{},{}]" ,manufacturerName,deviceTypeName ,modelName);

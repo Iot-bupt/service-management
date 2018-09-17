@@ -12,7 +12,7 @@
     <!-- 使用disconf必须添加以下配置 -->
     <bean id="disconfMgrBean" class="com.baidu.disconf.client.DisconfMgrBean"
           destroy-method="destroy">
-        <property name="scanPackage" value="com.edu.bupt"/>
+        <property name="scanPackage" value="cn.edu.bupt"/>
     </bean>
     <bean id="disconfMgrBean2" class="com.baidu.disconf.client.DisconfMgrBeanSecond"
           init-method="init" destroy-method="destroy">

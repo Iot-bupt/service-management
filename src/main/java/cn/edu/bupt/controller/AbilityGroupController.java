@@ -25,7 +25,7 @@ public class AbilityGroupController extends BaseController{
 
     JsonParser parser = new JsonParser();
 
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAuthority('TENANT_ADMIN')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'saveAbilityGroup')")
     @RequestMapping(value = "/abilityGroup", method = RequestMethod.POST)
     public AbilityGroup  saveAbilityGroup(@RequestBody String group,HttpServletResponse response){
         log.info("AbilityGroup.saveAbilityGroup receive request [{}]",group);
@@ -41,21 +41,21 @@ public class AbilityGroupController extends BaseController{
         return abilityGroup;
     }
 
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'getAllAbilityGroups')")
     @RequestMapping(value = "/abilityGroup", method = RequestMethod.GET)
     public List<AbilityGroup> getAllAbilityGroups(){
         log.info("AbilityGroup.getAllAbilityGroups receive request [{}]");
         return abilityGroupService.getAllAbilityGroup();
     }
 
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAuthority('TENANT_ADMIN')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'deleteAbilityGroup')")
     @RequestMapping(value = "/abilityGroup", method = RequestMethod.DELETE)
     public void deleteAbilityGroup(@RequestParam int modelId){
         log.info("AbilityGroup.deleteAbilityGroup receive request [{}]",modelId);
         abilityGroupService.deleteAbilityGroup(modelId);
     }
 
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'getManufacturers')")
     @RequestMapping(value = "/abilityGroup/manufacturers", method = RequestMethod.GET)
     public List<Manufacturer> getManufacturers(@RequestParam(required = false) String keyword,
                                                HttpServletResponse response){
@@ -63,7 +63,7 @@ public class AbilityGroupController extends BaseController{
         return abilityGroupService.getManufacturersByKeyWords(keyword);
     }
 
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'getDeviceTypes')")
     @RequestMapping(value = "/abilityGroup/deviceTypes", method = RequestMethod.GET)
     public List<DeviceType> getDeviceTypes(@RequestParam int manufacturerId, @RequestParam(required = false) String keyword,
                                            HttpServletResponse response){
@@ -71,7 +71,7 @@ public class AbilityGroupController extends BaseController{
         return abilityGroupService.getDeviceTypesByKeyWords(manufacturerId,keyword);
     }
 
-    @PreAuthorize("#oauth2.hasScope('all') OR hasAnyAuthority('TENANT_ADMIN', 'CUSTOMER_USER')")
+    @PreAuthorize("#oauth2.hasScope('all') OR hasPermission(null ,'getModels')")
     @RequestMapping(value = "/abilityGroup/models", method = RequestMethod.GET)
     public List<Model> getModels(@RequestParam int manufacturerId, @RequestParam int deviceTypeId, @RequestParam(required = false)  String keyword,
                                  HttpServletResponse response){
